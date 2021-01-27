@@ -1,0 +1,11 @@
+사용자 A가 작성한 파일입니다
+
+1. 계정 정보 등록
+	git config --global user.name '사용자이름'
+	git config --global user.email '사용자이메일'
+2. userA 폴더를 git이 관리하는 폴더로 만들기
+	git init
+3. 기본으로 생성되는 master 브랜치를 main 브랜치로 바꿔주자
+	git checkout -b main : main이라는 이름의 브랜치를 생성하고	해당 브랜치로 이동
+	git branch -M main : 기본브랜치를 main 브랜치로 지정
+	git status : 상태확인
