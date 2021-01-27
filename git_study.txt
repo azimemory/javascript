@@ -11,5 +11,12 @@
 	git status : 상태확인
 4. 파일을 생성하고 add, commit 하기
 	git add <파일명> : 파일을 staging area 추가
-	git commit -m 'message' : commit을 하고 commit에 대한 메세지를 남긴다.
+	git commit : commit에 대한 메세지를 남기기 위한 vi 에디터가 실행된다. 
+					i : 입력모드 , esc : 입력모드 빠져나오기, wq : 저장 종료
+	git commit -m 'message' : commit을 하고 commit에 대한 간단한 메세지를 남긴다.
 	commit 내역은 git log 명령어를 통해 확인 가능
+5. 파일을 특정 commit 지점으로 되돌리기
+	git reset --soft <되돌릴 commit> : commit 내역을 되돌리고 commit만 취소(Staging area에 파일이 남아있다)
+	git reset --mixed <되돌릴 commit> : commit 내역을 되돌리고 staging 까지 취소 
+	git reset --hard <되돌릴 commit> : commit 내역을 되돌리고 파일을 rollback
+	
