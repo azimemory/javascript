@@ -1,4 +1,4 @@
-사용자 B가 작성한 내용입니다.
+사용자 A와 B가 작성한 내용입니다.
 
 1. 계정 정보 등록
 	git config --global user.name '사용자이름'
