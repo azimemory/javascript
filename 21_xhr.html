@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style type="text/css">
+	.wrap>div{
+		display:flex;
+		justify-content:space-between;
+		height:10vw;
+		width:80vw;
+		text-align:center;
+		font-size:1vw;
+	}
+	
+	.wrap>div>div{
+		width:20%;
+		height:90%;
+		border:1px solid black;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: contain;
+	}
+	
+	.wrap>div:first-child{
+		height:20%;
+	}
+	
+	img{
+		width:30%;
+		height:90%;
+	}
+</style>
+
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+
+<!-- Ajax : Asynchronous JavaScript and XML 
+	비동기통신을 위해 XMLHttpRequest 객체가 제공된다.
+	또는 fetch API를 통해 비동기통신을 할 수도 있다.
+-->
+<input type='text' id='keyword'>
+<button id='btn_search'>검색</button>
+<hr>
+<div class='wrap'>
+	<div class='wrap_book'>
+		<div class='title'>제목</div>
+		<div class='price'>가격</div>
+		<div class='publisher'>출판사</div>
+		<div class='thum'>이미지</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+let keyword, prevKeyword;
+let pageCnt = 1;
+let isEnd = false; //데이터를 모두 읽어왔는지는 나타내는 boolean
+
+let drawBooks = (obj) => {
+	let copy = $('.wrap_book').outerHTML;
+	
+	console.dir(prevKeyword);
+	console.dir(keyword);
+	if(prevKeyword != keyword){
+		$('.wrap').innerHTML = copy; //검색어가 바뀔 경우 화면을 비우고 처음부터 그린다.
+		isEnd = false; //데이터를 모두 읽어왔는지 여부도 초기화
+	}
+	
+	prevKeyword = keyword;
+	
+	if(isEnd){
+		alert("더이상 읽어올 정보가 없습니다.");
+	}else{
+		obj.documents.forEach((e)=>{
+			$('.wrap').innerHTML += copy;
+			let bookInfo = $('.wrap').lastElementChild;
+			bookInfo.children[0].innerHTML = e.title;
+			bookInfo.children[1].innerHTML = e.price;
+			bookInfo.children[2].innerHTML = e.publisher;
+			bookInfo.children[3].innerHTML = '';
+			bookInfo.children[3].style.backgroundImage = `url(${e.thumbnail})`;
+		});
+	}
+}
+
+let kakaoBookAPI = ()=>{
+	keyword = $('#keyword').value;
+	let xhr = new XMLHttpRequest();
+	let url = `https://dapi.kakao.com/v3/search/book?query=${keyword}&size=5&page=${pageCnt}`;
+	
+	//시작줄
+	xhr.open("GET",url);
+	//HEADER
+	xhr.setRequestHeader("Authorization","KakaoAK 73570e7dafa9c87fd3d5b44b0c7ae03e");
+	//전송
+	xhr.send();
+	//비동기통신 완료 이후 response받기
+	xhr.addEventListener('load',()=>{
+		let json = xhr.response;
+		let obj = JSON.parse(xhr.response);		
+		//페이지 카운트 증가
+		if(obj.meta.is_end){
+			isEnd = true;
+		}else{
+			pageCnt++;
+		}
+		
+		drawBooks(obj);
+	})
+}
+
+$('#btn_search').addEventListener('click',()=>{
+	kakaoBookAPI();
+})
+
+
+document.addEventListener('wheel',()=>{
+	let contentDiv = document.createElement('div');
+	if(scrollY > document.querySelector('body').clientHeight - screen.availHeight){
+		kakaoBookAPI();
+	}
+})
+
+
+
+
+</script>
+</body>
+</html>

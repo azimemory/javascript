@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>객체</h1>
+<h2>객체 생성 및 호출</h2>
+<pre>
+	자바스크립트의 객체를 생성할 때는 {} 사용해 리털럴 방식으로 선언하거나
+	Object 생성자 함수를 사용해 객체를 생성할 수 있다.
+	객체의 속성에는 모든 자료형이 올 수 있다.(함수포함);
+</pre>
+<div id='object-note' class='note'></div>
+<script type="text/javascript">
+	//객체를 리터럴방식으로 생성
+	let book = {
+		title:'달콤한 나의 도시',
+		type:'종이 책',
+		category:['문학','소설'],
+		//중간에 - 가 빼기연산자로 인식되어서 에러가 발생
+		'cate-count':2
+	}
+	
+	//Object 생성자 함수를 사용해 객체 생성
+	let foo = new Object(); //아무런 속성이 없는 빈 객체 생성
+	//빈 객체에 속성 추가
+	foo.name = 'foo';
+	foo.family = ['아들','딸','동생'];
+	
+	//객체의 속성에 접근
+	$('#object-note').addEventListener('click',(e)=>{
+		$('#object-note',`book:${book}`);
+		$('#object-note',`foo:${foo}`);
+		$('#object-note',`<hr>객체명.속성명으로 접근하기`);
+		$('#object-note',`book:${book.title}`);
+		$('#object-note',`book:${book.type}`);
+		$('#object-note',`book:${book.category}`);
+		$('#object-note',`foo:${foo.name}`);
+		$('#object-note',`foo:${foo.family}`);
+		$('#object-note',`<hr>객체명[속성명]으로 접근하기`);
+		$('#object-note',`book:${book['title']}`);
+		$('#object-note',`book:${book['type']}`);
+		$('#object-note',`book:${book['category']}`);
+		$('#object-note',`book:${book['cate-count']}`);
+		$('#object-note',`foo:${foo['name']}`);
+		$('#object-note',`foo:${foo['family']}`);
+	})
+</script>
+<h2>객체의 메서드</h2>
+<pre>
+	객체의 속성 중 함수 자료형인 속성을 메서드라고 부른다.
+</pre>
+<div id='method-note' class='note'></div>
+<script type="text/javascript">
+	let name = '야옹이';
+
+	let dog = {
+		name:'복실이',
+		//화살표 함수는 this와 arguments 받아오지 않기 때문에 메서드를 만들 때는 부적절하다.
+		eat:function(food){
+			$('#method-note',`${this.name}가 ${food}를 먹고 있네요. 멍멍멍`);
+		}
+	}
+	
+	dog.eat('츄르');
+</script>
+<hr>
+<h2>객체와 반복문</h2>
+<pre>
+	for-in문을 사용해 객체의 속성명을 String 타입의 값으로 모두 가져올 수 있다.
+</pre>
+<div id='for-in-note' class='note'></div>
+<script type="text/javascript">
+let game = {
+	title:'diablo immotal',
+	price:10000,
+	language:'한글',
+	producer:'블리자드'
+}
+
+game.player = '하명도';
+
+//Map의 keySet() 메서드 용도로 사용
+for(key in game){
+	$('#for-in-note',`${key}:${game[key]}`);
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

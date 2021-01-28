@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>inheritance</h1>
+<div id='inheritance-note' class='note'></div>
+<script type="text/javascript">
+/* 프로토타입의 특징을 사용해 상속을 구현 해보자. */
+let person = {
+	name:'zzoon',
+	gender:'male',
+	setName:function(name){
+		this.name = name;
+	},
+	getName:function(){
+		return this.name;
+	},
+	setGender:function(){
+		this.gender = gender;
+	},
+	getGender:function(){
+		return this.gender;
+	},
+	
+	//Person을 상속받는 객체들이
+	//toString을 호출했을 때
+	//후손객체들의 속성이 정상적으로 출력이 되는 toString으로 만들어주세요.
+	toString:function(){
+		let arr = [];
+		for(key in this){
+			if(typeof(this[key]) != 'function'){
+				arr.push(`${key}:${this[key]}`);
+			} 
+		}
+		
+		arr.sort();
+		return arr.join(' / ');
+	}
+}
+
+//person을 상속받을 teacher와 studuent 생성
+let student = {
+	subject:'java',
+	score:100,
+	setSubject:function(subject){
+		this.subject = subject;
+	},
+	getSubject:function(){
+		return this.subject;
+	},
+	setScore:function(score){
+		this.score = score;
+	},
+	getScore:function(){
+		return this.score;
+	}
+}
+
+/* 상속 전 */
+$('#inheritance-note', person);
+$('#inheritance-note', student);
+
+/* student의 __proto__속성에 person을 등록하여 상속관계로 만들어준다. */
+student.__proto__ = person;
+$('#inheritance-note','student : ' +  student);
+
+/* 중학생 객체를 만들어서 student를 상속시켜 보자! */
+let middleSchooler = {
+	age : 14,
+	setAge:function(age){
+		this.age = age;
+	},
+	getAge:function(){
+		return this.age;
+	}
+}
+
+let hightSchooler = {
+	age : 19,
+	setAge:function(age){
+		this.age = age;
+	},
+	getAge:function(){
+		return this.age;
+	}
+}
+
+middleSchooler.__proto__ = student;
+hightSchooler.__proto__ = student;
+
+middleSchooler.setName('하명도'); 
+middleSchooler.setSubject('슬기로운 생활');
+middleSchooler.setScore(100);
+middleSchooler.setAge(16);
+
+$('#inheritance-note','middleSchooler : ' +  middleSchooler);
+
+console.dir('================middleSchooler 상속 후=================');
+console.dir(middleSchooler);
+
+//이 toString은 왜 setter의 결과를 반영하지 못하는지.
+//$('#inheritance-note','상속받은 메서드 사용 : ' +  middleSchooler.getName());
+//$('#inheritance-note','상속받은 메서드 사용 : ' +  middleSchooler.getSubject());
+//$('#inheritance-note','상속받은 메서드 사용 : ' +  middleSchooler.getScore());
+
+
+//Object.create(): 매개변수로 넘어온 객체를 부모로 가지는 빈 객체를 생성해주는 메서드
+function createObject(o){
+	//빈 생성자 함수	
+	function F(){};
+	// 생성자 함수의 프로토타입 객체를 매개변수로 넘어온 객체로 지정
+	F.prototype = o;
+	// 생성자 함수를 실행해 객체를 반환
+	return new F();
+}
+
+let who = createObject(student);
+who.age = 15;
+who.className = 'pclass';
+who.setClassName = function(arg){this.className = arg};
+who.getClassName = function(arg){return this.className};
+
+console.dir(who);
+who.setName('하명도');
+$('#inheritance-note',who.getName());
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: red;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>1. 비동기</h1>
+<pre>
+	두 가지 이상의 작업을 동시에 처리하는 것.
+	자바스크립트에서 비동기로 동작하는 경우 : eventListener, ajax, Timer ...
+	자바스크립트는 single thread로 동작하기 때문에 비동기처리를 할 수 없다.
+	자바스크립트는 동기적으로 코드를 수행하다가 비동기적으로 동작해야하는 함수를 만나면
+	해당 함수의 처리를 브라우저에게 맡긴다. 브라우저가 비동기적으로 작업을 처리하고 나면
+	해당 비동기 작업이 끝난 뒤 수행해야하는 콜백함수를 다시 자바스크립트의 stack영역으로 올려준다.
+</pre>
+<div id='async-note' class='note'></div>
+<script type="text/javascript">
+	$("#async-note").addEventListener('click', (e)=>{
+		//1초뒤에 div의 배경을 파란색으로 변경시켜주는 메서드
+		setTimeout(() => {
+			e.target.style.backgroundColor = 'blue';
+			$('#async-note','비동기적으로 동작하는 코드');
+		}, 0);
+		
+		$('#async-note','동기적으로 동작하는 코드');
+		$('#async-note','동기적으로 동작하는 코드');
+		$('#async-note','동기적으로 동작하는 코드');
+		$('#async-note','동기적으로 동작하는 코드');
+	})
+
+</script>
+<h1>1. 비동기 실습</h1>
+<div id='async-test' class='note'></div>
+<script type="text/javascript">
+/* 
+	아이디가 async-test 인 요소를 클릭했을 때 해당 요소의 배경색을 
+	1초마다 빨 => 초 => 노 => 파 => 분홍 순으로 변경해주세요.
+	그리고 해당 요소의 자식요소로 'https://www.naver.com'으로 연결되는 링크를 추가하세요
+	링크의 텍스트는 '비동기 실습 링크' 입니다.
+	
+*/
+	$("#async-test").addEventListener('click',(e)=>{
+		setTimeout(()=>{
+			e.target.style.backgroundColor = 'green';
+			setTimeout(()=>{
+				e.target.style.backgroundColor = 'yellow';
+				setTimeout(()=>{
+					e.target.style.backgroundColor = 'blue';
+					setTimeout(()=>{
+						e.target.style.backgroundColor = 'pink';
+					},1000)
+				},1000)
+			},1000)
+		},1000)
+		
+		$("#async-test",'<a href="https://www.naver.com">비동기 실습 링크</a>');
+		
+	});
+</script>
+
+	<h1>2. Promise</h1>
+	<pre>
+		Promise는 자바스크립트의 내장 객체로 Callback 지옥을 해결하기 위해 등장
+		Promise는 비동기작업을 수행하고 비동기 작업의 성공/실패 여부에 따라
+		then 메서드 또는 catch 메서드를 호출하는 객체
+		
+		Promise의 상태
+			1. pending : Promise의 연산이 완료되지 않은 상태.
+			2. fullfilled : Promise의 연산이 성공적으로 완료된 상태. / resolve() 메서드가 호출된 상태
+			3. rejected : Promise의 연산이 실패한 상태 / 
+			
+		Promise의 메서드
+			resolve() : Promise의 상태를 fullfilled 상태로 만들고 Promise의 결과값을 then 메서드로 전달
+			reject() : Promise의 상태를 rejected 상태로 만들고 Promise의 결과값을 catch 메서드로 전달
+			
+		Promise의 후속처리 메서드
+			then() : resolve() 메서드를 통해 전달받은 결과값을 사용해 후속처리를 위한 연산을 수행하고
+					Promise 객체를 반환한다.
+			catch() : resect() 메서드를 통해 전달받은 결과값을 사용해 예외처리를 위한 연산을 수행하고
+					Promise 객체를 반환한다.
+			finally() : Promise의 성공/실패 여부와 상관없이 무조건 실행되어야 하는 연산을 처리하는 메서드
+			
+		Promise 구문
+		
+		//Promise를 생성할 때 수행해야할 비동기 코드가 작성된 콜백함수를 생성자의 매개변수로 전달
+		//콜백함수의 매개변수로 resolve, reject를 선언
+		//Promise는 생성자를 호출하는 시점(== Promise를 만드는 시점)에 콜백함수가 호출되면서 비동기 작업 시작
+		let p1 = new Promise((resolve, reject)=>{});
+		
+		//then의 콜백함수의 매개변수로 Promise의 결과값이 넘어온다.
+		//then은 새로운 Promise객체를 반환함으로 체인형식으로 then을 이어나갈 수 있다.
+		p1.then((arg)=>{return res}) //새로운 Promise 반환 : 새로운 Promise의 결과값은 콜백함수의 결과값
+		//새로운 Promise의 결과값을 아래의 then 메서드의 콜백함수 매개변수로 전달.
+		
+		.then((arg) => {return new Promise((resolve,reject)=>{})}) 
+		//Pending 상태의 Promise가 콜백함수의 결과로 반환
+		//then메서드의 콜백함수의 결과값으로 Pending 상태의 Promise가 반환되면
+		//then메서드가 반환하는 Promise는 콜백함수가 반환한 Promise의 이행여부과 결과값을 따른다.
+		
+		//이전 then에서 return되는 Promise의 결과값이 매개변수로 전달
+		.then((arg)=>{})
+		.catch((error) => {})
+		.finally(()=>{})
+		
+		1. then의 콜백함수에서 값을 반환하면 해당 결과값을 다음 then의 콜백함수 매개변수로 전달	
+		2. then의 콜백함수에서 Pending 상태의 Promise를 반환하면 해당 Promise의 이행여부와 결과값을 따르는
+		  Promise를 반환 따라서 다음 then은 콜백함수가 반환하는 Promise의 결과값을 매개변수로 전달받는다.
+	</pre>
+	<div id='promise-note' class='note'></div>
+	<script type="text/javascript">
+		
+		$('#promise-note').addEventListener('click',(e)=>{
+			
+			e.target.innerHTML = '';
+			
+			let p1 = new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					e.target.style.backgroundColor = 'blue';
+					//브라우저의 입력창, 사용자가 입력한 값이 결과값으로 반환된다.
+					//Number()  => 문자열을 숫자로 형변환하는 메서드
+					//			만약 문자열의 형태가 숫자가 아니라면 NaN이 반환
+					//NaN(Not a Number) == false
+					let myMoney = Number(prompt('소지금액을 입력하십시오'));
+					let payment = Number(prompt('지불하고자 하는 금액을 입력하십시오'));
+					
+					//사용자가 입력한 myMoney와 payment중 하나라도 false인 경우 
+					//Promise를 rjected상태로 만들어 준다.
+					if(!(myMoney && payment)){
+						reject('정확하지 않은 값이 입력되었습니다.');
+					}
+					
+					e.target.innerHTML += 'reject가 호출되었지만 아래 코드가 실행된다.'
+					let balance = myMoney - payment;
+					
+					//소지금액에서 결제금액을 뺀 값이 0보다 크다면
+					//Promise의 상태를 fullfilled 상태로 만든다.
+					if(balance > 0){
+						//Promise의 결과값 : reject나 resolve의 매개변수로 전달한 값.
+						let resArr = [payment,balance];
+						resolve(resArr);
+						//resolve나 reject 이후의 코드가 실행된다.
+						//resolve나 reject가 비동기적으로 수행되기 때문에
+						//resArr[0]의 값이 먼저 변경되고 then이 실행된다.
+						//resArr[0] = 1000000;
+					}else{
+						reject('잔액이 모자랍니다.');
+					}
+				},1000)
+			})
+			
+			p1.then(payInfo=>{
+				e.target.innerHTML += `<br>첫번째 then : ${payInfo[0]}원 결제 하였습니다.`;
+				return payInfo[1];
+			}).then(balance=>{
+				e.target.innerHTML += `<br>두번째 then : ${balance}원 남았습니다.`;
+			}).catch(error =>{
+				e.target.innerHTML += `<br>${error}`;
+			}).finally(()=>{
+				e.target.innerHTML += `<br>이용해주셔서 감사합니다.`;
+			})
+			
+			
+			/* Promise가 비동기로 움직이는 지 확인하기 위해
+			   동기로 움직이는 코드를 추가 */
+			e.target.style.backgroundColor = 'gold';
+			e.target.style.color = 'white';
+		})	
+	
+	</script>
+	<h1>'비동기 실습 문제'를 promise를 사용해서 callback지옥 해결하기</h1>
+	<div id='promise-test' class='note'></div>
+	<script type="text/javascript">
+		//1초에 한번씩 promise-test의 배경색을
+		//초록, 분홍, 파랑, 노랑 중 하나의 색으로 랜덤하게 변경해주세요. 
+		//위 작업은 3번 반복됩니다.
+		//만약 이전의 색과 같은 색으로 배경색이 변경된다면 Promise를 rejected 상태로 만들어 주고
+		//'같은 색이 선택되었습니다.' 라고 알림창을 띄워주세요.(alert)
+	
+		$('#promise-test').addEventListener('click',(e)=>{
+			
+			const colorArr = ['green','pink','blue','yellow'];
+			
+			function asyncChangeColor(prevIdx){
+				let idx = Math.floor(Math.random()*4);
+				return new Promise((resolve,reject)=>{
+					setTimeout(()=>{
+						if(prevIdx == idx){
+							console.log('reject');
+							reject('같은 색이 선택되었습니다.');
+						}
+						
+						console.log('resolve');
+						e.target.style.backgroundColor = colorArr[idx];	
+						resolve(idx);
+					},1000)				
+				})
+			}
+			
+			asyncChangeColor()
+			.then( prevIdx => asyncChangeColor(prevIdx))
+			.then( prevIdx => asyncChangeColor(prevIdx))
+			.then( prevIdx => asyncChangeColor(prevIdx))
+			.then( prevIdx => asyncChangeColor(prevIdx))
+			.catch(error =>{console.log('에러가 발생')})
+			.finally(()=>{
+				e.target.style.backgroundColor = 'red';	
+			})
+		})
+	
+	
+	</script>
+	
+	<h1>async/await</h1>
+	<pre>
+		async/await
+		Promise를 동기식 처럼 사용하기 위해 등장
+		사용방법
+			원하는 함수 앞에 async 예약어를 붙여 async 함수로 만들어 준다.
+			async 함수 내부의 Promise 앞에 await 예약어를 붙인다.
+			await 예약어는 async함수 내부의 Promise가 fullfilled 되거나, rejected 될 때 까지
+				async함수의 실행을 일시정지 시킨다.
+			await 예약어가 사용된 Promise의 반환값은, 
+			Promise가 fullfilled 상태가 되었다면 Promise의 반환값이고
+			rejected된 경우에는 reject의 값을 throw 한다.
+	</pre>
+	<div id='async-await-note' class='note'></div>
+	<script type="text/javascript">
+	$('#async-await-note').addEventListener('click',(e)=>{
+		
+		const colorArr = ['green','pink','blue','yellow'];
+		function asyncChangeColor(prevIdx){
+			let idx = Math.floor(Math.random()*4);
+			return new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					if(prevIdx == idx){
+						console.log('reject');
+						reject('같은 색이 선택되었습니다.');
+						//return; //return을 사용해서 함수를 끝내야 아래쪽 코드가 실행되지 않는다.
+					}
+					
+					console.log('resolve');
+					e.target.style.backgroundColor = colorArr[idx];	
+					resolve(idx);
+					//return;
+				},1000)				
+			})
+		 }
+		 
+		//async함수 선언
+		async function testAsync(){
+			try{
+				let idx = await asyncChangeColor();
+				idx = await asyncChangeColor(idx);
+				idx = await asyncChangeColor(idx);
+				idx = await asyncChangeColor(idx);
+				e.target.innerHTML = 'await 예약어가 붙은 Promise의 동작이 모두 완료되었습니까?';
+			}catch(error){
+				alert(error);
+			}finally{
+				e.target.style.backgroundColor = 'red';	
+			}
+		}
+		
+		testAsync();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	 });	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

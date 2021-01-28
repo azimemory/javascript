@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	span{
+		display:inline-block;
+		width:100px;
+	}
+	
+	tr{
+		height:30px;
+	}
+	
+	td{
+		text-align:center;
+	}
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<div id='wrap_inp'>
+	<label><span>아이디: </span><input type=text></label><br>
+	<label><span>비밀번호: </span><input type=password></label><br>
+	<label><span>주소: </span><input type=text></label><br>
+	<label><span>전화번호: </span><input type=text></label><br>
+	<button id='add'>추가</button>
+	<button id='del-all'>전체삭제</button>
+</div>
+<div>
+	<table border=1>
+		<thead>
+			<tr>
+				<th width="100px">아이디</th>
+				<th width="100px">비밀번호</th>
+				<th width="300px">주소</th>
+				<th width="300px">전화번호</th>
+				<th width="100px">삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+$('#add').addEventListener('click',(e)=>{
+	
+	let inpList = document.querySelectorAll('#wrap_inp input');
+	let trElement = document.createElement('tr');
+	$('tbody').append(trElement);
+	
+	for(let i = 0; i < 5; i++){
+		let tdElement = document.createElement('td');
+		trElement.append(tdElement);
+		
+		if(i < 4){
+			tdElement.innerHTML = inpList.item(i).value;
+		}else{
+			tdElement.innerHTML = '삭제';
+			tdElement.addEventListener('click',(e)=>{
+				tdElement.parentElement.remove();
+			})
+			
+			tdElement.addEventListener('mouseenter',()=>{
+				tdElement.parentElement.style.transform='skew(5200deg,5200deg)'
+				tdElement.parentElement.style.transitionDuration='5s';
+				tdElement.parentElement.style.backgroundColor = 'red';
+				tdElement.parentElement.style.color = 'white';
+			})
+			
+			tdElement.addEventListener('mouseleave',()=>{
+				tdElement.parentElement.style.backgroundColor = 'white';
+				tdElement.parentElement.style.color = 'black';
+			})
+		}
+	}
+})
+
+$('#del-all').addEventListener('click',(e)=>{
+	$('tbody').innerHTML = '';
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

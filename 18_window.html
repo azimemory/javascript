@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		min-height:100vh;
+	}
+
+	.note{
+		display:block;
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+	
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>Window 객체</h1>
+<pre>
+	window 객체는 자바스크립트의 최상위 객체이다.
+	window 객체는 DOM, BOM, JavaScript 객체를 속성으로 가지고 있다.
+	DOM : Document Object Model
+	JavaScript 
+	BOM : Browser Object Model >> Web api
+			location객체, navigator객체, history객체, screen 객체
+</pre>
+<h3>open : 새 브라우저 창을 생성하는 Window 객체의 메서드</h3>
+<span onclick='openNaver()' class='note'>네이버</span><br>
+<span onclick='openDaum()' class='note'>Daum</span>
+<script type="text/javascript">
+	let openNaver = ()=>{
+		window.open('https://www.naver.com','네이버');		
+	}
+
+	let openDaum = () =>{
+		console.log(window.screen.availWidth);
+		console.log(window.screen.availHeight);
+		let positionX = window.screen.availWidth/2-300;
+		let positionY = window.screen.availHeight/2-150;
+		open('https://www.daum.net','daum',`height=300,width=600,top=${positionY},left=${positionX}`);
+	}
+</script>
+
+<h2>screen 객체</h2>
+<div id='screen-note' class=note></div>
+<script type="text/javascript">
+	$('#screen-note','Screen.height: ' + screen.height);
+	$('#screen-note','Screen.width: ' + screen.width);
+	$('#screen-note','Screen.availHeight: ' + screen.availHeight);
+	$('#screen-note','Screen.availWidth: ' + screen.availWidth);
+	$('#screen-note','body.height: ' + $('body').clientHeight);
+</script>
+
+<h2>location</h2>
+<p>브라우저의 주소 표시줄과 관련된 객체</p>
+<span onclick='location.href="https://www.naver.com"'>네이버로 이동</span><br>
+<span onclick='location.assign("https://www.google.com")'>구글로 이동</span><br>
+<span onclick='location.replace("https://www.daum.net")'>다음으로 이동</span><br>
+<span onclick='location.reload()'>현재 페이지 새로고침</span><br>
+<span onclick='location.href = location.href'>현재 페이지 새로고침</span><br>
+
+<h2>navigator 객체</h2>
+<p>브라우저에 대한 정보를 가지고 있는 객체</p>
+<div id='navi-note' class='note'></div>
+<script type="text/javascript">
+	$('#navi-note',`언어 : ${navigator.language}`);
+	$('#navi-note',`전체 정보 : ${navigator.userAgent}`);
+</script>
+
+
+
+
+
+</body>
+</html>

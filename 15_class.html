@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>class</h1>
+<div id='class-note' class='note'></div>
+<script type="text/javascript">
+	class Person{
+		/* public field */
+		name;
+		
+		/* private field */
+		#_gender;
+		
+		/* 	static 
+			자바스크립트의 static은 자바와 달리 오직 type으로만 static 속성을 다룰 수 있다.
+			Person.species (0) , hmd.species(X) */
+		static species = 'mammalia';
+		
+		/* 상수 
+			속성명을 모두 대문자로 작성하면 상수로 간주. 물론 실제로 상수가 되는 것 아니다.
+			자바스크립트의 내장객체어도 사용되고 있는 방법	*/
+		#_HABITAT = 'earth';
+		
+		/* 생성자 */
+		constructor(name,gender){
+			this.name = name;
+			this.#_gender = gender;
+		}
+		
+		/* setter */
+		set name(value){
+			this.name = value;
+		}
+		
+		/* getter */
+		get name(){
+			return this.name;
+		}
+		
+		set gender(value){
+			this.#_gender = value;
+		}
+		
+		get gender(){
+			return this.#_gender;
+		}
+		
+		get HABITAT(){
+			return this.#_HABITAT;
+		}
+		
+		toString(){
+			let arr = [];
+			for(let key in this){
+				if(typeof(this[key]) != 'function'){
+					arr.push(key + '=' + this[key]);
+				}
+			}
+			arr.sort();
+			return arr.join(' / ');
+		}
+	}
+
+	let hmd = new Person('하명도','남');
+	/* public */
+	$('#class-note', hmd.name);
+	/* private */
+	$('#class-note', hmd.gender);
+	/* static */
+	$('#class-note', Person.species);
+	/* 상수 */
+	$('#class-note', hmd.HABITAT);
+	$('#class-note', hmd.toString());
+
+
+	/* 상속 */
+	class Student extends Person{
+		className;
+		#_score;
+		
+		constructor(name,gender,className,score){
+			/* 부모의 생성자를 먼저 호출해야 한다. */
+			super(name,gender);
+			this.className = className;
+			this.#_score = score;
+		}
+		
+		set className(value){
+			this.className = value;
+		}
+		
+		get className(){
+			return this.className;
+		}
+		
+		set score(value){
+			this.#_score = value;
+		}
+		
+		get score(){
+			return this.#_score;
+		}
+	}
+
+	let hgd = new Student('홍길동','남','pclass',100);
+	$('#class-note',hgd);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

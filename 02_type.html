@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		border: 1px solid;
+		min-height:300px;
+	}
+</style>
+</head>
+<body>
+	<h1>type</h1>
+	<pre>
+		primitive type : String(문자열), Number(숫자), Boolean, Null, Undefined
+				데이터를 복사할 때 깊은 복사(값이 복사)가 되는 타입
+			
+		reference type : Object
+				데이터를 복사할 때 얕은 복사(주소값 복사)가 되는 타입
+	</pre>
+	
+	<div id='type-note' class='note' onclick='typeTest()'></div>
+	<script type="text/javascript">
+		function typeTest(){
+			let name = '하명도';  //String
+			let age = 13;  //Number
+			let isSuccess = true; //Boolean
+			let empty = null; //null => 개발자가 명시적으로 해당 변수가 비었음을 나타내기 위해 사용하는 값
+			let undefinedVal; //undefined => 정의되지 않은, 변수를 선언하고 값을 초기화하지 않았을 때 
+							  //			자바스크립트 엔진이 자동으로 할당하주는 값
+			let obj = {
+					name:'하명도',
+					age:13,
+					isHealthy:false,
+					toString:function(){
+						return `이름:${하명도},나이:${age},건강?:${isHealthy}`
+					}
+			}; //Object
+			
+			let add = function(num1,num2){
+				return num1 + num2;
+			} //function
+			
+			let hobby = ['축구','농구','야구']; // Object
+			
+			/* typeof() : 변수에 담겨있는 값의 type을 반환해주는 연산자 */
+			/* document.querySelector(css선택자) */
+			
+			let typeNote = document.querySelector('#type-note');
+			
+			//background-color => backgroundColor
+			typeNote.innerHTML += '<b>name : </b>' + typeof(name) + '<br>';
+			typeNote.innerHTML += '<b>age : </b>' + typeof(age) + '<br>';
+			typeNote.innerHTML += '<b>isSuccess : </b>' + typeof(isSuccess) + '<br>';
+			typeNote.innerHTML += '<b>empty : </b>' + typeof(empty) + '<br>';
+			typeNote.innerHTML += '<b>undefinedVal : </b>' + typeof(undefinedVal) + '<br>';
+			typeNote.innerHTML += '<b>obj : </b>' + typeof(obj) + '<br>';
+			typeNote.innerHTML += '<b>add : </b>' + typeof(add) + '<br>';
+			typeNote.innerHTML += '<b>hobby : </b>' + typeof(hobby) + '<br>';
+		}
+	</script>
+	
+	<h1>자료형 관련 함수</h1>
+	<h2>String</h2>
+	<pre>
+		자바스크립트의 String의 리터럴은 '', "" 으로 나타낼 수 있다.
+		String 자바스크립트의 내장객체로 문자열들을 다루기 위한 메서드를 제공해준다.
+	</pre>
+	<div id="string-note" class="note"></div>
+	<script type="text/javascript">
+		let stringNote = document.querySelector('#string-note');
+		let testStr = 'Pclass';
+		
+		/* toUpperCase() 
+		   문자를 대문자로 변환하여 반환 매서드 */
+		 stringNote.innerHTML += 'toUpperCase() : '  + testStr.toUpperCase() + '<br>'; 
+	
+		/* toLowerCase() */
+		stringNote.innerHTML += 'toLowerCase() : '  + testStr.toLowerCase() + '<br>'; 
+		
+		/* split() */
+		let fruitsName = '사과, 바나나, 복숭아, 키위, 파인애플';
+		
+		let fruitArr = fruitsName.split(',');
+		fruitArr.forEach(function(v){
+			stringNote.innerHTML += 'split() : ' + v + '<br>'; 
+		})
+		
+		/* substring() */
+		stringNote.innerHTML += 'substring() : '  + testStr.substring(0,3) + '<br>'; 
+		
+		/* 자바스크립트의 String은 문자배열형태로 인덱스로 접근이 가능하다. */
+		for(let i = 0; i < testStr.length; i++){
+			stringNote.innerHTML += 'testStr의 ' + i + '번 인덱스 값 : ' + testStr[i] + '<br>';
+		}
+		
+		testStr[0] = 'Z';
+		/* 인덱스로 접근하여 변경을 시도해도 문자열이 변경되지 않는다. */
+		stringNote.innerHTML += "testStr[0] = 'Z' : " + testStr + '<br>';
+	</script>
+	
+	<h2>Math</h2>
+	<pre>
+		자바스크립트 내장 객체로 숫자를 다루기 위한 메서드를 가지고 있다.
+	</pre>
+	<div id="math-note" class='note'></div>
+	<script type="text/javascript">
+	let mathNote = document.querySelector('#math-note');
+	
+	/* abs() */
+	mathNote.innerHTML += 'abs : ' + Math.abs(-123) + '<br>';
+	
+	/* random() */
+	mathNote.innerHTML += 'random() : ' + Math.random() + '<br>';
+	/* 1~5사이의 난수를 구하시오 */
+	
+	/* round */
+	mathNote.innerHTML += 'round(123.456) : ' + Math.round(123.456) + '<br>';
+	
+	/* ceil() */
+	mathNote.innerHTML += 'ceil(123.456) : ' + Math.ceil(123.456) + '<br>';
+	
+	/* floor() */
+	mathNote.innerHTML += 'floor(123.456) : ' + Math.floor(123.456) + '<br>';
+	
+	/* Number.toFixed 
+		고정소수점 방식으로 숫자를 표기.
+		원하는 소수점 자리에서 반올림하는 용도로 사용 가능 	*/
+	mathNote.innerHTML += '123.456.toFixed : ' + 123.456.toFixed(2) + '<br>';
+	
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

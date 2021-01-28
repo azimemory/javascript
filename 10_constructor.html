@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>생성자 함수</h1>
+<pre>
+	생성자 함수는 그냥 함수이다.
+	함수를 호출 할 때 new 연산자를 붙여서 함수를 호출하면 생성자 함수로 호출이 된다.
+</pre>
+<div id='constructor-note' class='note'></div>
+<script type="text/javascript">
+
+//생성자 함수로 사용할 함수를 작성할 때는 함수명의 첫글자를 대문자로 쓰는 것이 관례
+function Student(className, name, kor, eng, math){
+	
+	//확인해보기, 객체 속성에 포함되지 않음
+	let score = 100;
+	
+	//생성자 함수를 통해 생성할 객체의 속성을 정의하고 매개변수로 받아온 값으로 초기화
+	this.className = className;
+	this.name = name;
+	this.kor = kor;
+	this.eng = eng;
+	this.math = math;
+	
+	//메서드 
+	this.getSum = function(){
+		return this.kor + this.eng + this.math;
+	}
+	
+	this.getAvg = function(){
+		return this.getSum()/3;
+	}
+	
+	//object객체로 부터 상속받은 toString을 오버라이딩
+	this.toString = function(){
+		return `className:${this.className} / name:${this.name}
+		/ 총점 : ${this.getSum()} / 평균 : ${this.getAvg()}`
+	}
+}
+
+//생성자 함수로 실행
+let hmd = new Student('pclass','하명도',100,30,20);
+let hgd = new Student('zclass','홍길동',100,0,0);
+
+$('#constructor-note',hmd);
+$('#constructor-note',hgd);
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

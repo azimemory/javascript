@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/all.css">
+<link rel="stylesheet" href="resources/css/reset.css">
+<link rel="stylesheet" href="resources/css/slide.css">
+</head>
+<body>
+	<div class='wrap_slide'>
+		<div class='arrow'>
+			<i class="fas fa-angle-double-left left-arrow"></i>
+			<i class="fas fa-angle-double-right right-arrow"></i>
+		</div>
+		<ul class='slide-contents'>
+			<li><img src='resources/image/jo.jpg'></li>
+			<li><img src='resources/image/IU.jpg'></li>
+			<li><img src='resources/image/엠마.jpg'></li>
+			<li><img src='resources/image/원빈.jpg'></li>
+		</ul>
+		<div class='wrap_btn'>
+			<button class='btn_nav' data-slide-idx='0'></button>
+			<button class='btn_nav' data-slide-idx='1'></button>
+			<button class='btn_nav' data-slide-idx='2'></button>
+			<button class='btn_nav' data-slide-idx='3'></button>
+		</div>
+	</div>
+	<!-- 외부 js파일 추가 -->	
+	<!-- 
+		script 태그의 defer, async 속성
+		defer : 페이지가 모두 로드 된 후에 외부스크립트를 실행시키는 속성 
+		async :	외부 스크립트를 실행시키기 위한 html요소가 모두 로드 된 후에 외부스크립트를 실행
+				속도가 빠르다.
+	 -->
+<script defer type="text/javascript" src='resources/js/slide.js'></script>	
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+
+<h1>this</h1>
+<h2>1. 함수를 호출할 때 this 바인딩</h2>
+<pre>
+	함수를 호출할 때 this는 arguments와 마찬가지로 함수가 실행될 때 함께 함수에 전달된다.
+	함수 내부에서 사용되는 this는 전역객체(Window)를 참조하고 있다.
+</pre>
+<div id='this-note' class='note'></div>
+<script type="text/javascript">
+//전역에 선언된 var 변수는 window의 프로퍼티로 등록 된다.
+var who = '전역객체의 who입니다.';
+
+function info(){
+	var who = 'info 함수의 who입니다.';
+	$('#this-note',this.who);
+	console.dir(this);	
+}
+
+info();
+</script>
+
+<h2>2. 메서드를 호출할 때 this 바인딩</h2>
+<pre>
+	메서드를 호출할 때 this는 해당 메서드를 호출할 때 사용한 객체가 바인딩 된다.
+</pre>
+<div id='this-note2' class='note'></div>
+<script type="text/javascript">
+	var methodWho = '전역객체의 who입니다.';
+	
+	let pclass = {
+			methodWho : 'pclass의 who입니다.',
+			info : function(){
+				$('#this-note2',this.methodWho);
+				console.dir(this);
+			}
+	}
+	
+	let zclass = {
+			methodWho : 'zclass의 who입니다.',
+		 	info : pclass.info
+	}
+
+	pclass.info();
+	zclass.info();
+</script>
+
+<h2>3. 생성자 함수에서의 this바인딩</h2>
+<pre>
+	생성자 함수는 자신이 호출되는 시점에, 함수의 실행결과로 반환 될 빈 객체를 생성한다. 
+	그리고 this에 자신이 반환할 빈 객체를 바인딩 한다.
+	
+	생성자 함수로 사용될 때 return이 없는 경우 자동으로 this를 반환한다.
+	만약에 return문이 존재한다면,
+		1) 기본타입을 반환하는 return문이라면 무시하고 this를 반환한다. 
+		2) 객체를 반환하는 return문이라면 return문에 명시한 객체를 반환한다.
+</pre>
+<div id='this-note3' class='note'></div>
+<script type="text/javascript">
+	
+var who = '전역객체의 학생입니다.';
+
+function Info(){
+	this.info = function(){
+		$('#this-note3', this.who);
+	}
+	
+	/* 
+	return {
+		info:function(){
+			$('#this-note3','생성자함수에 의해 만들어진 객체가 아니라, return문에 명시적으로 작성한 객체입니다.')
+		}
+	} */
+	
+	//생성자 함수에서 this.who는 undefined이기 때문에 기본형
+	return this.who;
+}
+
+let pclassInfo = new Info();
+pclassInfo.who = 'Pclass 학생';
+pclassInfo.info();
+
+$('#this-note3',Info());
+
+</script>
+
+<h2>4. 화살표 함수에서의 this바인딩</h2>
+<pre>
+	화살표함수는 함수가 호출될 때 this를 전달받지 않는다.
+	화살표함수 안의 this는 상위스코프의 this가 된다.
+</pre>
+<div id='that-note' class='note'></div>
+<script type="text/javascript">
+	
+	//that 구문
+	function TestObj(){
+		/* 변수  */
+		//let that = this;
+		/* 반환될 빈 객체의 속성을 동적으로 생성하고 값을 할당 */
+		this.name = '하명도',
+		this.age = 10,
+		this.printInfo = function(){
+			
+			//메서드 내부의 함수에서 객체의 속성에 접근해야 할 때
+			/* 
+			function print(){
+				//name, age를 이 함수안에서 출력해보세요.
+				$('#that-note','print : ' + that.name);
+				$('#that-note','print : ' + that.age);
+			} */
+			
+			//화살표함수는 함수가 호출될 때 this를 전달받지 않는다.
+			//화살표함수 안의 this는 상위스코프의 this가 된다.
+			//print 화살표함수는 printInfo 메서드를 상위스코프로 가지고,
+			//printInfo 메서드에서 this는 메서드를 호출한 객체이기 때문에
+			//print 화살표함수의 this는 메서드를 호출한 객체가 된다.
+
+			let print = ()=>{
+				//name, age를 이 함수안에서 출력해보세요.
+				$('#that-note','print : ' + this.name);
+				$('#that-note','print : ' + this.age);
+			}
+			
+			print();
+		}
+	}
+	
+	let testObj = new TestObj();
+	testObj.printInfo();
+</script>
+
+<h2>5. 명시적 this 바인딩</h2>
+<pre>
+	Function 객체의 call메서드와 apply메서드를 사용해 this를 명시적으로 바인딩 할 수 있다.
+</pre>
+<div id='this-note4' class='note'></div>
+<script type="text/javascript">
+	
+	let pclassObj = {
+		who : 'pclass 학생',
+		age : 100,
+		info : function(){
+			$("#this-note4",`이름 : ${this.who} / 나이 : ${this.age}`)
+		}
+	}
+
+	let zclassObj = {
+		who : 'zclass 학생',
+		age : 1000,
+		info : function(){
+			$("#this-note4",`이름 : ${this.who} / 나이 : ${this.age}`)
+		}
+	}
+	
+	function changeWho(who, age){
+		this.who = who;
+		this.age = age;
+	}
+	
+	//pclass의 info메서드를 호출하지만 zclass를 this에 담아준다.
+	pclassObj.info.apply(zclassObj,[]);
+	zclassObj.info.call(pclassObj);
+
+	changeWho.apply(zclassObj,['zclass의 이름이 변했다?',0.5]);
+	changeWho.call(pclassObj,'pclass의 이름이 변했다?',10.5);
+	
+	console.dir(zclassObj);
+	console.dir(pclassObj);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

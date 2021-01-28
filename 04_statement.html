@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>자바스크립트의 Statement</h1>
+	<ol>
+		<li>if</li>
+		<li>switch</li>
+		<li>while</li>
+		<li>for</li>
+		<li>for-each</li>
+	</ol>
+	<h1>자바스크립트의 Statement 테스트</h1>
+	<label>if: <input type="text" id='if' placeholder='1또는 2를 입력하세요'></label>
+	<button onclick='testIf()'>확인하기</button>
+	<div id='if-note'></div>
+	
+	<label>switch: <input type="text" id='switch' placeholder='1또는 2를 입력하세요'></label>
+	<button onclick='testSwitch()'>확인하기</button>
+	<div id='switch-note'></div>
+	
+	<label>while: <input type="text" id='while' placeholder='숫자를 입력하세요.'></label>
+	<button onclick='testWhile()'>확인하기</button>
+	<div id='while-note'></div>
+	
+	<label>for: <input type="text" id='for' placeholder='숫자를 입력하세요.'></label>
+	<button onclick='testFor()'>확인하기</button>
+	<div id='for-note'></div>
+	
+	<label>forEach: <input type="text" id='forEach' placeholder='좋아하는 문장을 입력하세요.'></label>
+	<button onclick='testForEach()'>확인하기</button>
+	<div id='forEach-note'></div>
+	
+	<script type="text/javascript">
+		function testIf(){
+			let input = document.querySelector('#if').value;			
+			let ifNote = document.querySelector('#if-note');
+			
+			if(input == 1){
+				ifNote.innerHTML += '1을 입력하였습니다.<br>';
+			}else if(input == 2){
+				ifNote.innerHTML += '2를 입력하였습니다.<br>';
+			}else{
+				ifNote.innerHTML += '1또는 2를 입력하세요.<br>';
+			}
+		}
+		
+		function testSwitch(){
+			let input = document.querySelector('#switch').value;			
+			let switchNote = document.querySelector('#switch-note');
+			
+			/* 일치연산자로 값을 비교해서 case를 찾기 때문 */
+			switch(input){
+				case '1' : switchNote.innerHTML += '1을 입력하였습니다.<br>'; break;
+				case '2' : switchNote.innerHTML += '2을 입력하였습니다.<br>'; break;
+				default : switchNote.innerHTML += '1또는 2를 입력하세요.<br>'; 
+			}
+		}
+		
+		function testWhile(){
+			let count = document.querySelector('#while').value;
+			let whileNote = document.querySelector('#while-note');
+			while(count > 0){
+				whileNote.innerHTML += count-- + '<br>';
+			}
+		}
+		
+		function testFor(){
+			let count = document.querySelector('#for').value;
+			for(let i = 0; i < count; i++){
+				document.querySelector('#for-note').innerHTML += i + '<br>';
+			}			
+		}
+	
+		function testForEach(){
+			//사용자가 forEach에 입력한 문자열을 "" 기준으로 나누어 문자배열로 반환
+			let arr = document.querySelector('#forEach').value.split("");
+			//배열의 길이만큼 콜백함수를 반복 실행
+			arr.forEach(function(v,i,curArr){
+				document.querySelector('#forEach-note').innerHTML
+				+= i + '번째 : ' + v + '<br>';
+				console.log(curArr);
+			})
+			
+			let divArr = document.querySelectorAll('body>div');
+			let colorArr = ['red','blue','green','yellow','purple'];
+			divArr.forEach(function(e,i){
+				e.style.backgroundColor = colorArr[i];
+				e.style.color='white';
+			});
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

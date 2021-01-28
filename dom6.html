@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	fieldset{
+		width:400px;
+		text-align:center;
+		background-color: skyblue;
+	}
+	
+	div{
+		/* 화면에서 요소를 제거, 영역도 함께 제거한다. */
+		display:none;
+		width:500px;
+		height:50px;
+		margin:10px;
+		padding:10px;
+		background-color: orange;
+	}
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<fieldset>
+	<legend>검색할 항목을 선택하세요.</legend>
+	<label>
+		<input type='radio' name='cate' data-div-id='#box_tit'>제목
+	</label>
+	<label>
+		<input type='radio' name='cate' data-div-id='#box_date'>날짜
+	</label>
+	<label>
+		<input type='radio' name='cate' data-div-id='#box_writer'>작성자
+	</label>
+</fieldset>
+<hr>
+<div id='box_tit' class='search-box'>
+	<label>검색할 제목을 입력하세요 :</label>
+	<br>
+	<input type='search' size='50'>
+	<input type='submit' value='검색'>
+</div>
+<div id='box_date' class='search-box'>
+	<label>검색할 날짜를 선택하세요 :</label>
+	<br>
+	<input type='date'> - <input type='date'>
+	<input type='submit' value='검색'>
+</div>
+<div id='box_writer' class='search-box'>
+	<label>검색할 작성자 아이디를 입력하세요 : </label>
+	<br>
+	<input type='search' size='25'>
+	<input type='submit' value='검색'>
+</div>
+
+<script type="text/javascript">
+document.querySelectorAll('input[type=radio]').forEach((e)=>{
+	e.addEventListener('click',(event)=>{
+		document.querySelectorAll('.search-box').forEach((box)=>{
+			box.style.display='none';
+		});
+		
+		$(e.dataset.divId).style.display='block';
+	})
+})
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

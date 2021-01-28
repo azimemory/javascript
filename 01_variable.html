@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>변수와 자료형</h1>
+	<h2>변수 선언</h2>
+	<pre>
+		자바스크립트는 타입추론을 지원하는 언어.
+		
+		자바스크립트 : var 변수명 : 변수, ES6 이전
+					   let 변수명 : 변수, ES6 이후
+					 const 변수명 : 상수, ES6 이후
+					 
+		var : 재선언, 재할당, 함수레벨 스코프, 변수 호이스팅 가능
+			  재선언 ex) var test = 'A';
+					     var test = 'B';
+		let : 재선언(X), 재할당, 블록레벨 스코프, 변수 호이스팅 불가능
+		const : 재선언(x), 재할당(x), 블록레벨 스코프, 변수 호이스팅 불가능
+	</pre>
+
+<!-- 
+	자바스크립트 작성방법
+	1. html 내부에 script 태그를 사용해서 자바스크립트를 작성
+	2. js 파일을 생성해 js파일에서 자바스크립트를 작성하고 html파일에 참조 시키는 방법
+ -->
+	<script type="text/javascript">
+	
+	/* 
+		변수호이스팅
+		자바스크립트는 interpreter가 코드를 해석할 때 
+		먼저 변수 또는 함수를 선언하는 코드를 모두 해석해서 메모리에 등록한 다음
+		초기화를 진행한다.
+		따라서 변수선언을 아래에서 하더라도, interpreter가 해석하는 순서로는 
+		변수를 선언하는 코드를 먼저 해석함으로
+		변수를 선언하는 코드 위에서 변수를 사용하더라도 에러가 발생하지 않는다.
+	*/
+	
+	vStr = '여기서 var 변수를 사용한다?';
+	//lStr = '여기서 let 변수를 사용한다?';
+	console.log(vStr);
+	//console.log(lStr);
+	
+	/* 
+		전역에서 var로 선언한 변수는 전역객체인 window의 속성으로 등록이 된다.
+		let이나 const는 전역객체에 등록되지 않는다.
+		
+		전역객체(window) : 자바스크립트 안에서 선언하는 변수, 함수, 객체를 속성으로 관리하는 객체
+						전역객체는 브라우저가 종료될 때까지 메모리에서 내려가지 않는다.
+						따라서 전역객체의 속성으로 등록된 변수, 함수, 객체도 브라우저가 종료될 때 까지 내려가지 않는다.
+	*/
+	
+	var vStr = 'var 전역번수';
+	let lStr = 'let 변수';
+	const cStr = 'const 상수';
+	/* const 변수에 값 재할당 해보기 */
+	//cStr = 'cStr';
+	
+	/* 
+		함수레벨 스코프 && 블록레벨 스코프
+		scope : 범위, 메모리에 올라간 변수가 메모리에서 내려오게 되는 시점
+		함수레벨 스코프 : 변수가 선언된 함수가 실행되면 메모리에 올라가고, 종료되면 메모리에서 내려온다.
+		블록범위 스코프 : 변수가 선언된 {} 이 닫히면 메모리에서 내려온다.
+	*/
+	
+	/* 함수 선언 : function 함수명(args...){} */
+	function variableTest(){
+		
+		if(true){
+			var vStr = 'variableTest 함수 내부에서 선언한 변수';
+			var vScope = 'var 변수는 함수범위 scope를 가진다.';
+			let lScope = 'let 변수는 블록범위 scope를 가진다.';
+			
+			/* 함수내부에서 선언한 vStr이 출력이 된다.
+			   그런데 만약에 전역에 선언 해 둔 vStr에 담겨있는 값을 사용하고 싶으면?	
+			   전역객체(window)의 속성을 사용할 때 객체의 이름은 생략하고 사용할 수 있다.
+			*/
+			alert(vStr);
+			console.log('if문 블록 안 : ' + vScope);
+			console.log('if문 블록 안 : ' + lScope);
+		}
+		
+		console.log('if문 블록 바깥 : ' + vScope);
+		//console.log('if문 블록 바깥 : ' + lScope);
+	}
+	
+	/* 함수 실행 */
+	variableTest();
+	
+	
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

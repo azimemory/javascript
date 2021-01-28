@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>encapsulation</h1>
+<div id='encapsulation-note' class='note'></div>
+<script type="text/javascript">
+	function Person(name, gender){
+		//객체의 속성
+		let _name = name;
+		let _gender = gender;
+		
+		//setter/getter 메서드를 사용해 name,gender를 클로저로 포함시킨다.
+		this.setName = function(name){
+			_name = name;
+		}
+		
+		this.getName = function(){
+			return _name;
+		}
+		
+		this.setGender = function(gender){
+			_gender = gender;
+		}
+		
+		this.getGender = function(){
+			return _gender;
+		},
+		
+		this.toString = function(){
+			let arr = [];
+			for(key in this){
+				if(key.startsWith('get')){
+					arr.push(`${key.substring(3)}:${this[key]()}`);
+				} 
+			}
+			
+			arr.sort();
+			return arr.join(' / ');
+		}
+	}
+	
+	let hmd = new Person();
+	hmd.setName('하명도');
+	hmd.setGender('남');
+	
+	$('#encapsulation-note',`속성으로 접근 : ${hmd._name} / ${hmd._gender}`);
+	$('#encapsulation-note',`getter로 접근 : ${hmd.getName()} / ${hmd.getGender()}`);
+	
+	function Teacher(salary){
+		let _salary = salary;
+		
+		this.setSalary = function(salary){
+			_salary = salary;
+		}
+		
+		this.getSalary = function(){
+			return _salary;
+		}
+	}
+	
+	let kya = new Teacher('100000000');
+	kya.__proto__ = hmd;
+	kya.setName('김영아');
+	kya.setGender('여');
+	
+	$('#encapsulation-note',`속성으로 접근 : ${kya._name} / ${kya._gender} / ${kya._salary}`);
+	$('#encapsulation-note',`getter로 접근 : ${kya.getName()} / ${kya.getGender()} / ${kya.getSalary()}`);
+	
+	
+	$('#encapsulation-note',`toString  사용 : ${hmd}`);
+	$('#encapsulation-note',`toString  사용 : ${kya}`);
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

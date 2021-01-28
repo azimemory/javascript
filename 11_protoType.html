@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		width:50%;
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>프로토타입 객체</h1>
+<pre>
+	함수가 생성되는 시점에 함께 생성되는 객체를 프로토타입 객체라고 한다.
+	(함수객체를 console 확인해보면 prototype 속성으로 프로토타입 객체를 확인할 수 있다.)
+	프로토타입 객체는 constructor 속성 가지고 있는 객체로 constructor 속성에
+	자신과 함께 생성된 함수를 참조하고 있다.
+	
+	생성자 함수로 생성된 객체는 자신의 프로토타입속성으로 생성자함수의 프로토타입 객체를 가지게 된다.
+	(객체의 프로토타입 객체는 console에서 __proto__ 속성으로 확인할 수 있다.)
+	객체는 프로토타입 객체가 가지고 있는 속성을 자신의 것 처럼 사용할 수 있다.
+	또한 프로토타입 객체 또한 자바스크립트의 객체이기 때문에 속성을 동적으로 추가할 수 있다.
+	
+	같은 생성자함수로 만들어진 객체들은 같은 프로토타입 객체를 가지게 된다. 따라서 해당
+	프로토타입 객체가 가지고 있는 속성이나 메서드를 공유해서 사용하게 된다.
+	
+	프로토타입 속성의 연결을 프로토체인이라고 한다.
+	(객체의 프로토타입 객체의 프로토타입 객체의 프로토타입 객체...)
+	프로토체인을 통해 연결된 객체들의 속성이나 메서드도 자신의 속성처럼 사용할 수 있다.
+</pre>
+<div id='proto-note' class=note></div>
+<script type="text/javascript">
+
+//생성자 함수로 사용할 함수를 작성할 때는 함수명의 첫글자를 대문자로 쓰는 것이 관례
+function Student(className, name, kor, eng, math){
+	
+	//확인해보기, 객체 속성에 포함되지 않음
+	let score = 100;
+	
+	//생성자 함수를 통해 생성할 객체의 속성을 정의하고 매개변수로 받아온 값으로 초기화
+	this.className = className;
+	this.name = name;
+	this.kor = kor;
+	this.eng = eng;
+	this.math = math;
+	
+	//메서드 
+	this.getSum = function(){
+		return this.kor + this.eng + this.math;
+	}
+	
+	this.getAvg = function(){
+		return this.getSum()/3;
+	}
+	
+	//object객체로 부터 상속받은 toString을 오버라이딩
+	this.toString = function(){
+		return `className:${this.className} / name:${this.name}
+		/ 총점 : ${this.getSum()} / 평균 : ${Math.floor(this.getAvg())}`
+	}
+}
+
+let hmd = new Student('pclass',' 하명도',100,50,30);
+let hgd = new Student('uclass','홍길동',100,50,50);
+let kke = new Student('aclass','김고은',100,200,200);
+
+$("#proto-note",hmd);
+$("#proto-note",hgd);
+$("#proto-note",kke);
+
+//hmd proto 속성에 academyName 이라는 새로운 속성을 추가하고 kh로 초기화한다.
+//hmd처럼 Student 생성자함수를 통해 생성된 hgd, kke도 academyName 속성을 사용할 수 있는 것을 볼 수 있다.
+//proto 객체가 같기 때문!
+
+hmd.__proto__.academyName = 'KH';
+
+$("#proto-note",`<hr>${hmd} / 학원명 : ${hmd.academyName}`);
+$("#proto-note",`${hgd} / 학원명 : ${hgd.academyName}`);
+$("#proto-note",`${kke} / 학원명 : ${kke.academyName}`);
+
+hmd.job = '기획자';
+hgd.__proto__.job = '개발자';
+$("#proto-note",`<hr>${hmd} / 학원명 : ${hmd.academyName} / 직업명 : ${hmd.job}`);
+$("#proto-note",`${hgd} / 학원명 : ${hgd.academyName} / 직업명 : ${hgd.job}`);
+$("#proto-note",`${kke} / 학원명 : ${kke.academyName} / 직업명 : ${kke.job}`);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

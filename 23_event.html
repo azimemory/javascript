@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.bubble,.capture{
+		border : 1px solid;
+		padding : 20px;
+	}
+	
+	.div1{
+		background-color: red;
+	}
+	
+	.div2{
+		background-color: orange;
+	}
+	
+	.div3{
+		background-color: yellow;
+	}
+	
+	.div4{
+		background-color: green;
+	}
+
+</style>
+</head>
+<body>
+<!-- 이벤트 전파
+	
+	event capture : 이벤트가 발생하면 브라우저는 이벤트가 발생한 요소를 찾기 위해
+					루트요소부터 이벤트를 아래로 전파한다.
+	
+	target 단계 : 이벤트가 발생한 요소에 까지 이벤트가 전파되면 target의 이벤트핸들러를 동작 시킨다.
+	
+	event bubbling : target의 이벤트 핸들러가 동작하고나면 다시 루트요소 이벤트를 전파한다. 
+	
+	기본적으로 target 단계 이후 부터 이벤트핸들러를 동작 시키게 된다.
+
+ -->
+ 
+ <h1>이벤트 전파</h1>
+ <h2>이벤트 버블링</h2>
+ <p>target의 이벤트 핸들러를 동작시킨 이후 부모요소로 이벤트가 전파되며 올라간다.</p>
+ 
+ <div class='div1 bubble'>
+ 	<div class='div2 bubble'>
+ 		<div class='div3 bubble'>
+ 			<div class='div4 bubble'></div>
+ 		</div>
+ 	</div>
+ </div>
+ <script type="text/javascript">
+ 
+ const colorArr = ['lightblue','blue','lightyellow','yellow'];
+ 
+ document.querySelectorAll('.bubble').forEach((e,i)=>{	
+	 e.addEventListener('click',(event)=>{
+		 setTimeout(() => {
+			 //이벤트가 발생한 요소의 class를 확인할 수 있다.
+			 alert(e.className);
+			 e.style.backgroundColor = colorArr[i];
+		}, 300);
+	 })
+ })
+ 
+ </script>
+ 
+ <h2>이벤트 캡쳐링</h2>
+ <p>target에게 이벤트를 전파하기 위해 루트요소에서 아래로 이벤트를 전파할 때 이벤트핸들러를 동작 시킨다.</p>
+ 
+ <div class='div1 capture'>
+ 	<div class='div2 capture'>
+ 		<div class='div3 capture'>
+ 			<div class='div4 capture'></div>
+ 		</div>
+ 	</div>
+ </div>
+ <script type="text/javascript">
+ 
+ document.querySelectorAll('.capture').forEach((e,i)=>{	
+	 e.addEventListener('click',(event)=>{
+		 setTimeout(() => {
+			 //이벤트가 발생한 요소의 class를 확인할 수 있다.
+			 alert(e.className);
+			 e.style.backgroundColor = colorArr[i];
+		}, 300);
+	 },true)
+ })
+ 
+ </script>
+ 
+ <h2>이벤트 전파 막기</h2>
+ <p>현재 이벤트 이후 이벤트 버블링 또는 이벤트 캡처링을 막는다.</p>
+ 
+ <div class='div1 capture'>
+ 	<div class='div2 capture'>
+ 		<div class='div3 capture'>
+ 			<div class='div4 capture'></div>
+ 		</div>
+ 	</div>
+ </div>
+ 
+ <script type="text/javascript">
+ document.querySelectorAll('.capture').forEach((e,i)=>{	
+	 e.addEventListener('click',(event)=>{
+		 setTimeout(() => {
+			 //이벤트가 발생한 요소의 class를 확인할 수 있다.
+			 alert(e.className);
+			 e.style.backgroundColor = colorArr[i];
+		 }, 1000);
+		
+		event.stopPropagation(); 
+	 })
+ })
+ 
+ </script>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.note{
+		border:thin solid;
+		min-height:150px;
+	}
+</style>
+</head>
+<body>
+<!-- 
+	산술 : + - * / %
+	단항 : ++ --
+	비교 : < > <= >= == != === !==
+	논리 : && ||
+	삼항 : 조건식?값1:값2
+ -->
+ <h1>1. 문자열 결합 연산자</h1>
+ <pre>
+ 	문자 데이터가 등장하는 시점부터 + 가 문자열 결합연사자로 동작
+ 	ex) 7+7+'7' = 147
+ 	ex) '7'+7+7 = 777
+ </pre>
+ <div id="concat-note" class="note" onclick="testConcat()"></div>
+ <script type="text/javascript">
+ 	function testConcat(){
+ 		let case1 = 7 + 7  +'7';
+ 		let case2 = 7 + '7' + 7;
+ 		let case3 = '7' + 7 + 7;
+ 		let case4 = '7' + (7+7);
+ 		
+ 		let concatNote = document.querySelector('#concat-note');
+ 		concatNote.innerHTML += "7 + 7  +'7' = " + case1 + '<br>';
+ 		concatNote.innerHTML += "7 + '7' + 7 = " + case2 + '<br>';
+ 		concatNote.innerHTML += "'7' + 7 + 7 = " + case3 + '<br>';
+ 		concatNote.innerHTML += "'7' + (7+7) = " + case4 + '<br>';
+ 	}
+ </script>
+ 
+ <h1>2. equal</h1>
+ <pre>
+ 	==(동등연산자) : 값만 비교
+ 	===(일치연산자) : 값과 타입을 모두 비교
+ </pre>
+<span>원하는 글자를 입력하세요 : </span><input type="text" id="inp_text"><br>
+<span>비밀번호를 입력하세요 : </span><input type="number" id="inp_num"><br>
+
+<div id="equal-note" class='note' onclick="testEqual()"></div>
+<script type="text/javascript">
+	function testEqual(){
+		let equalNote = document.querySelector('#equal-note');
+		
+		let num = 0;
+		let str = '0';
+		
+		/* 	객체는 동등연산자로 원시형타입 비교할 때 객체의 toString() 메서드의 값과  원시자료형값을 비교한다. 
+			arr = []  : ''
+			빈 문자열을 Number로 파싱하면 0으로 파싱된다. */
+		
+		let arr = [];
+		if(true){
+			equalNote.innerHTML += 'num == str : ' + (num == str) + '<br>';	
+			equalNote.innerHTML += 'num == arr : ' + (num == arr) + '<br>';	
+			equalNote.innerHTML += 'str == arr : ' + (str == arr) + '<br>';	
+		}
+		
+		if(true){
+			equalNote.innerHTML += 'num === str : ' + (num === str) + '<br>';	
+			equalNote.innerHTML += 'num === arr : ' + (num === arr) + '<br>';	
+			equalNote.innerHTML += 'str === arr : ' + (str === arr) + '<br>';	
+		}
+		
+		/* 
+			자바스크립트의 값들은 boolena 값으로 변환될 수 있다.
+			1. false로 변환되는 값
+			   0, '', null, undefined, NaN
+			2. 위의 경우를 제외한 모든 경우는 true가 반환 	*/
+		if(0 || '' || undefined || null || NaN){
+			console.log('이 값들 중 하나라도 true가 있다.');
+		}else{
+			console.log('모두 다 false이다.');
+		}
+		
+		/* 입력값 확인하기 */
+		let inpText = document.querySelector('#inp_text').value;
+		
+		if(!inpText){
+			alert('값을 입력하세요.');
+		}else{
+			equalNote.innerHTML += '입력창에 사용자가 입력한 값 : ' + inpText;	
+		}
+		
+		/* 
+			동등연산자가 명확하지 않은 부분이 있음에도 동등연산자를 사용하는 이유
+			외부에서 넘어오는 값을 매번 타입체크를 하기 힘들기 때문  */
+		let inpNum = document.querySelector('#inp_num').value;
+		console.dir(document.querySelector('#inp_num'));
+		
+		/* 비밀번호가 1234라고 가정 */
+		if(inpNum == 1234){
+			alert('로그인에 성공했습니다.');
+		}else{
+			alert('로그인에 실패했습니다.');
+		}
+	}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

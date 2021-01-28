@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	img,#imgView{
+		width:300px;
+		height:300px;
+	}
+	
+	div{
+		background-color:black;
+	}
+
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+
+<label><input type="radio" name="radio-cat" data-url="image01.jpg">1번후보</label><br>
+<label><input type="radio" name="radio-cat" data-url="image02.jpg">2번후보</label><br>
+<label><input type="radio" name="radio-cat" data-url="image03.jpg">3번후보</label><br>
+
+<button class="btn_create-img" >이미지 생성하기</button>
+<button class="btn_del-img">이미지 삭제하기</button>
+
+<div id="imgView">
+
+</div>
+<script type="text/javascript">
+
+$(".btn_create-img").addEventListener('click',(e)=>{
+	document.querySelectorAll('input[name=radio-cat]').forEach((e)=>{
+		if(e.checked){
+			if($('#imgView>img')){
+				$('#imgView>img').src = 'resources/image/'+e.dataset.url;
+			}else{
+				let innerImg = document.createElement('img');
+				innerImg.src = 'resources/image/'+e.dataset.url;
+				$('#imgView').append(innerImg);
+			}
+		}
+	})
+})
+
+$('.btn_del-img').addEventListener('click',(e)=>{
+	$("#imgView").innerHTML = "";
+});
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

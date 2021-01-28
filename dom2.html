@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	p{
+		border:1px solid red;
+	}
+	
+	span{
+		color:red;
+		font-size:2vw;
+	}
+	
+	#wrap-div{
+		display:flex;
+		justify-content: space-around;
+		margin-top:5%;
+	}
+	
+	#wrap-div>div{
+		width:300px;
+		height:300px;
+		border:1px solid blue;
+	}
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>요소 추가하기</h1>
+<button id='btn_add-append'>append()</button>
+<button id='btn_add-prepend'>prepend()</button>
+<fieldset id='addElement'>
+	<legend>부모태그</legend>
+	<div id='addDiv'>
+		<span>======================div 태그======================</span>
+	</div>
+</fieldset>
+<script type="text/javascript">
+
+$("#btn_add-append").addEventListener('click', (e)=>{
+	let childDiv = document.createElement('div');
+	childDiv.innerHTML += 'div-after';
+	childDiv.style.height ='50px';
+	childDiv.style.width='250px';
+	childDiv.style.border='1px solid red';
+	childDiv.style.marginTop='1%';
+	
+	$('#addDiv').append(childDiv);
+})
+
+$('#btn_add-prepend').addEventListener('click',(e)=>{
+	let childDiv = document.createElement('div');
+	
+	childDiv.innerHTML += 'div-before';
+	childDiv.style.height ='50px';
+	childDiv.style.width='250px';
+	childDiv.style.border='1px solid red';
+	childDiv.style.marginTop='1%';
+	
+	$('#addDiv').prepend(childDiv);
+})
+
+</script>
+
+<h1>요소 이동시키기</h1>
+<button id='btn_move-test1'>요소 이동시키기 : test01로 이동</button>
+<button id='btn_move-test2'>요소 이동시키기 : test02로 이동</button>
+<button id='btn_move-test3'>요소 이동시키기 : test03로 이동</button>
+
+<div id='wrap-div'>
+	<div id='test01'></div>
+	<div id='test02'></div>
+	<div id='test03'></div>
+</div>
+
+<script type="text/javascript">
+	$('#btn_move-test1').addEventListener('click',(e)=>{
+		let divList = document.querySelectorAll('#addDiv>div');
+		$('#test01').append(divList.item(divList.length-1));
+	})
+	
+	$('#btn_move-test2').addEventListener('click',(e)=>{
+		let divList = document.querySelectorAll('#addDiv>div');
+		$('#test02').append(divList.item(divList.length-1));
+	})
+	
+	$('#btn_move-test3').addEventListener('click',(e)=>{
+		let divList = document.querySelectorAll('#addDiv>div');
+		$('#test03').append(divList.item(divList.length-1));
+	})
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

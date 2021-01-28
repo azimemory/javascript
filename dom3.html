@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	button{
+		line-height:2;
+	}
+
+	.wrap_color{
+		display: flex;
+		flex-wrap:wrap;
+		justify-content: space-between;
+		width:320px;
+		height:320px;
+	}
+	
+	.wrap_color>div{
+		width:150px;
+		height:150px;
+		margin-top:20px;
+		border:thin solid;
+	}
+	
+	.base{
+		display: flex;
+		flex-direction: column;
+		margin:4% 0 2% 0;
+	}
+	
+	
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<div class="wrap_color">
+	<div id="red">red</div>
+	<div id="pink">pink</div>
+	<div id="blue">blue</div>
+	<div id="green">green</div>
+</div>
+
+
+<!-- 
+dataset : html 요소에 특정 데이터를 저장하고, 자바스크립트에서 해당값을 사용할 수 있도록 제공되는 속성
+	data-*="value"
+	ex) data-color='red';
+	ex) data-div-id='#red';
+	
+	자바스크립트에서 해당 요소의 dataset 속성을 사용해 data-* 형태로 지정된 값들을 호출할 수 있다.
+	이때 snake표기법으로 작성된 코드는 camelCase표기법으로 자동변환된다.
+	div-id => divId
+	ex) $('selector').dataset.divId   ===> '#red' 반환
+ -->
+
+<div class="base">
+	<label><input type="checkbox" class='all'>전체선택</label>
+	<label><input type="checkbox" class='color' data-color="red" data-div-id="#red">빨강</label>
+	<label><input type="checkbox" class='color' data-color="pink" data-div-id="#pink">분홍</label>
+	<label><input type="checkbox" class='color' data-color="blue" data-div-id="#blue">파랑</label>
+	<label><input type="checkbox" class='color' data-color="green" data-div-id="#green">초록</label>
+</div>
+<button class='btn_select'>선택</button>
+<button class='btn_clear'>clear</button>
+
+<hr>
+<a href='https://www.naver.com' id='naver'>네이버</a>
+
+<script type="text/javascript">
+/* 기본이벤트가 존재하는 요소에 이벤트를 지정해줄 경우, 지정된 이벤트가 먼저 수행되고
+	그 다음 기본이벤트가 동작한다. 체크박스를 클릭하면 checked 상태로 바뀌는 기본이벤트가 있는데,
+	해당 기본이벤트는 새롭게 등록한 click가 수행이 완료되고 뒤이어서 기본이벤트가 동작해 체크상태로 변경
+*/
+
+$('#naver').addEventListener('click',(e)=>{
+	alert('네이버로 이동합니다.');
+	//기본이벤트 취소 시키기
+	//e.preventDefault();
+})
+
+
+$('.all').addEventListener('click',(e)=>{
+	document.querySelectorAll('.color').forEach((e)=>{
+		//체크박스나 라디오버튼의 checked 속성은 클릭이벤트가 발생할 경우
+		//이벤트리스너의 콜백함수가 호출되기 전에 true로 변경된다.
+		if($('.all').checked){
+			e.checked = true;
+		}else{
+			e.checked = false;
+		}
+	})
+})
+
+
+$('.btn_select').addEventListener('click',(e)=>{
+	document.querySelectorAll('.color').forEach((e)=>{
+		if(e.checked){
+			$(e.dataset.divId).style.backgroundColor = e.dataset.color;
+			$(e.dataset.divId).style.color = 'white';
+		}else{
+			$(e.dataset.divId).style.backgroundColor = 'white';
+			$(e.dataset.divId).style.color = 'black';
+		}
+	})
+})
+
+
+$('.btn_clear').addEventListener('click',(e)=>{
+	document.querySelectorAll('.base input').forEach((e)=>{
+		e.checked = false;
+	})
+	
+	document.querySelectorAll('.wrap_color>div').forEach((e)=>{
+		e.style.backgroundColor = 'white';
+		e.style.color='black';
+	})
+})
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

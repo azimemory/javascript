@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.content{
+		height:15vw;
+	}
+	
+	.IU{
+		background-image: url(resources/image/IU.jpg);
+		background-size: contain;
+	}	
+	
+	.JO{
+		background-image: url(resources/image/JO.jpg);
+		background-size: contain;
+	}
+
+</style>
+</head>
+<body>
+	<div class='wrapper' id='wrapper'>
+		<div class='IU content'></div>
+	</div>
+	
+<script type="text/javascript">
+document.addEventListener('wheel',()=>{
+	let contentDiv = document.createElement('div');
+	if(scrollY > document.querySelector('body').clientHeight - screen.availHeight){
+		if(document.querySelector('.wrapper').lastElementChild.className == 'IU content'){
+			contentDiv.className = 'JO content';
+		}else{
+			contentDiv.className = 'IU content';
+		}
+		document.querySelector('.wrapper').appendChild(contentDiv);
+	}
+})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>자바스크립트의 예외처리</h1>
+<script type="text/javascript">
+	try{
+		let errorTest = document.querySelector('#error-test');
+		errorTest.style.backgroundColor = 'blue';
+		errorTest.style.color = 'white';
+	}catch(error){
+		console.dir('catch블록!');
+		console.dir(error);
+		throw new Error('내가 발생시킨 예외');
+	}finally{
+		console.dir('finally블록!');
+	}
+</script>
+<div id='error-test'>error test용 코드</div>
+
+</body>
+</html>

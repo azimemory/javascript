@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.note{
+		min-height:100px;
+		background-color: lightgreen;
+		border:1px solid;
+	}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+function $(selector,text){
+	if(text){
+		document.querySelector(selector).innerHTML += `${text}<br>`;
+	}
+	
+	return document.querySelector(selector);
+}
+</script>
+<h1>자바스크립트 내장함수</h1>
+<h2>인코딩 디코딩과 관련된 내장함수</h2>
+<pre>
+	1. 인코딩
+	escape:영문, 알파벳, 숫자, 일부 특수문자(@,*,-,_,.,/)를 제외한 모든 문자를 인코딩
+	encodeURI:escape에서 인터넷 주소에 사용되는 일부 특수문자(:,;,/,=,?,&)를 추가로 제외하고 인코딩
+	encodeURIComponent:알파벳과 숫자를 제외한 모든 문자를 인코딩
+	
+	2.디코딩
+	unescape: escape로 인코딩된 문자열을 디코딩
+	decodeURI:encodeURI로 인코딩된 문자열을 디코딩
+	decodeURIComponent:encodeURIComponent로 인코딩된 문자열을 디코딩
+
+</pre>
+<div id='encoding-note' class='note'></div>
+<script type="text/javascript">
+	const URI = 'https://www.naver.com?test=한글입니다';
+	
+	let es = escape(URI);
+	let enURI = encodeURI(URI);
+	let enURIC = encodeURIComponent(URI);
+
+	$('#encoding-note',`escape() : ${es}`);
+	$('#encoding-note',`encodeURI() : ${enURI}`);
+	$('#encoding-note',`encodeURIComponent() : ${enURIC}`);
+	
+	
+	$('#encoding-note',`<hr>unescape() : ${unescape(es)}`);
+	$('#encoding-note',`decodeURI() : ${decodeURI(enURI)}`);
+	$('#encoding-note',`decodeURIComponent() : ${decodeURIComponent(enURIC)}`);
+</script>
+<h1>eval 함수</h1>
+<pre>
+	문자열을 자바스크립트 코드로 변환해 실행하는 함수
+</pre>
+<label>숫자 1 입력 : <input type='text' id='num1'></label><br>
+<label>숫자 2 입력 : <input type='text' id='num2'></label><br>
+<div id='eval-note' class='note'></div>
+<script type="text/javascript">
+
+$("#eval-note").addEventListener('click',(e)=>{
+	let evalStr = `
+		let number1 = Number($('#num1').value);
+		let number2 = Number($('#num2').value);
+		let sum = number1 + number2;
+		$('#eval-note','number1 + number2 = ' + sum);`;
+		
+		eval(evalStr);
+})
+
+</script>
+
+<h1>eval의 대체, Function 생성자 함수</h1>
+<label>숫자 1 입력 : <input type='text' id='fnNum1'></label><br>
+<label>숫자 2 입력 : <input type='text' id='fnNum2'></label><br>
+<div id='function-note' class='note'></div>
+<script type="text/javascript">
+$('#function-note').addEventListener('click',(e)=>{
+	let fnStr = `
+		let number1 = Number($('#fnNum1').value);
+		let number2 = Number($('#fnNum2').value);
+		let sum = number1 + number2;
+		$('#function-note','number1 + number2 = ' + sum);`;
+		
+	let sum = new Function(fnStr);
+	sum();
+})
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
