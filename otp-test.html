@@ -22,7 +22,7 @@
 </div>
 <div style="border:1px solid; padding: 5px; 10px; margin: 10px 0;">
     <form action="localhost:808//post" method="post">
-        <input type="tel" placeholder="전화번호를 입력하세요." id="uncertified_tell"><button onclick="requestOTP()">otp 발급</button><br>
+        <input type="tel" placeholder="전화번호를 입력하세요." id="uncertified_tell" name="phone"><button onclick="requestOTP()">otp 발급</button><br>
         Enter OTP here:
         <input autocomplete="one-time-code" required style="width:100%" class="inp_otp" name="user_otp"/>
         <input type="button" value="Submit" onclick="check()" class="btn btn-primary btn-block">
