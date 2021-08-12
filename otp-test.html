@@ -51,10 +51,10 @@
     }
     
     let requestOTP = () => {
-                const url = new URL(location.href);
-                const urlParams = url.searchParams;
+                let queryString = window.location.search;
+                queryString = queryString.split('=');
                 const tell = $('#uncertified_tell').val();
-                let urlScheme = `Your OTP is: ${urlParams.get('otp')}. \n\n@localhost:8080 #${urlParams.get('otp')}`;
+                let urlScheme = `Your OTP is: ${queryString[1]}. \n\n@azimemory.github.io #${queryString[1]}`;
                 location.href = 'sms:'+ tell + '?body='+encodeURIComponent(urlScheme);
         }
 </script>
