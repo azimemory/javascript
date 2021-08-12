@@ -21,10 +21,11 @@
     Send an SMS that includes <pre><code>@web-otp.glitch.me #12345</code></pre> at the last line to this phone.
 </div>
 <div style="border:1px solid; padding: 5px; 10px; margin: 10px 0;">
-    <form action="/post" method="post">
+    <form action="localhost:808//post" method="post">
+        <input type="tel" placeholder="전화번호를 입력하세요." id="uncertified_tell"><button onclick="requestOTP()">otp 발급</button><br>
         Enter OTP here:
-        <input type="text" autocomplete="one-time-code" inputmode="numeric" name="one-time-code">
-        <input type="submit" value="Submit">
+        <input autocomplete="one-time-code" required style="width:100%" class="inp_otp" name="user_otp"/>
+        <input type="button" value="Submit" onclick="check()" class="btn btn-primary btn-block">
     </form>
 </div>
 <script>
@@ -45,11 +46,17 @@
             }).then(otp => {
                 input.value = otp.code;
                 if (form) form.submit();
-            }).catch(err => {
-                console.log(err);
             });
         });
     }
+    
+    let requestOTP = () => {
+                const url = new URL(window.href);
+                const urlParams = url.searchParams;
+                const tell = $('#uncertified_tell').val();
+                let urlScheme = `Your OTP is: ${urlParams.get(otp)}. \n\n@localhost:8080 #${urlParams.get(otp)}`;
+                location.href = 'sms:'+ tell + '?body='+encodeURIComponent(urlScheme);
+        }
 </script>
 
 </body>
