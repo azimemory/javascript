@@ -51,7 +51,7 @@
     }
     
     let requestOTP = () => {
-                const url = new URL(window.href);
+                const url = new URL(location.href);
                 const urlParams = url.searchParams;
                 const tell = $('#uncertified_tell').val();
                 let urlScheme = `Your OTP is: ${urlParams.get(otp)}. \n\n@localhost:8080 #${urlParams.get(otp)}`;
