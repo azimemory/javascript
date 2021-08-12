@@ -21,7 +21,7 @@
     Send an SMS that includes <pre><code>@web-otp.glitch.me #12345</code></pre> at the last line to this phone.
 </div>
 <div style="border:1px solid; padding: 5px; 10px; margin: 10px 0;">
-    <form action="localhost:808//post" method="post">
+    <form action="http://localhost:8080/otp/check-otp" method="post">
         <input type="tel" placeholder="전화번호를 입력하세요." id="uncertified_tell" name="phone"><button onclick="requestOTP()">otp 발급</button><br>
         Enter OTP here:
         <input autocomplete="one-time-code" required style="width:100%" class="inp_otp" name="user_otp"/>
