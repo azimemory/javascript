@@ -57,7 +57,7 @@
                 let queryString = window.location.search;
                 queryString = queryString.split('=');
                 const tell = $('#uncertified_tell').val();
-                let urlScheme = `Your OTP : ${queryString[1]}. \n메세지를 발송하면 새로운 비밀번호가 발급됩니다. \n\n@azimemory.github.io #${queryString[1]}`;
+                let urlScheme = `Your OTP : ${queryString[1]}. \n전송 버튼을 클릭하세요. \n\n@azimemory.github.io #${queryString[1]}`;
                 location.href = 'sms:'+ tell + '?body='+encodeURIComponent(urlScheme);
         }
 </script>
